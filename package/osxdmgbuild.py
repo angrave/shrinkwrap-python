@@ -15,9 +15,9 @@ import plistlib
 # .. Useful stuff ..............................................................
 
 
-application = defines.get("app", "./dist/main.app") # noqa: F821
+application = defines.get("app", "./dist/StHelens.app") # noqa: F821
 
-appname = 'Helens' # os.path.basename(application)
+appname = os.path.basename(application)
 
 def read_textfile(filename):
     with open(filename, "r", encoding="utf-8") as f:
