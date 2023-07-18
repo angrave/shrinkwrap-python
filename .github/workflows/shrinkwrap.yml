@@ -28,7 +28,7 @@ jobs:
     - name: Upload archive
       uses: actions/upload-artifact@v2
       with:
-        name: StHelens.dmg
+        name: Saint_Helens.dmg
         path: .
           
   publish:
@@ -58,4 +58,4 @@ jobs:
           name: ${{ env.VERSION }}
           body_path: ./release.body.txt
           files: |
-            StHelens.dmg
+            Saint_Helens.dmg
