@@ -24,12 +24,13 @@ jobs:
     - name: Create osx installer
       run: |
          bash ./package/osx.sh
-         find .
-    - name: Upload archive
+         ls ./dist/
+    - name: Upload disk image
       uses: actions/upload-artifact@v2
       with:
         name: Saint_Helens.dmg
         path: Saint_Helens.dmg
+        if-no-files-found: error
           
   publish:
     needs: packageosx
