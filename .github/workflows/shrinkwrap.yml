@@ -29,7 +29,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Saint_Helens.dmg
-        path: .
+        path: Saint_Helens.dmg
           
   publish:
     needs: packageosx
@@ -47,7 +47,7 @@ jobs:
       
       - name: Set version
         run: |
-          echo "VERSION=0.0.1" >> $GITHUB_ENV
+          echo "VERSION=0.0.2" >> $GITHUB_ENV
           echo "Release Text" > ./release.body.txt
           echo ${{ env.VERSION }}
         
