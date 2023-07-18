@@ -15,7 +15,7 @@ import plistlib
 # .. Useful stuff ..............................................................
 
 
-application = defines.get("app", "./dist/main.app") 
+application = defines.get("app", "./dist/main.app") # noqa: F821
 
 appname = 'Koko' # os.path.basename(application)
 
