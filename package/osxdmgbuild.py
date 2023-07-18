@@ -17,8 +17,11 @@ import plistlib
 
 application = defines.get("app", "./dist/main.app") # noqa: F821
 
-appname = 'Koko' # os.path.basename(application)
+appname = 'Helens' # os.path.basename(application)
 
+def read_textfile(filename):
+    with open(filename, "r", encoding="utf-8") as f:
+        return f.read()
 
 def icon_from_app(app_path):
     plist_path = os.path.join(app_path, "Contents", "Info.plist")
@@ -202,10 +205,11 @@ list_column_sort_directions = {
 #  pt_PT, ro_RO, ru_RU, se, sk_SK, sl_SI, sr_RS, sv_SE, th_TH, to_TO, tr_TR,
 #  uk_UA, ur_IN, ur_PK, uz_UZ, vi_VN, zh_CN, zh_TW
 
+
 license = {
     "default-language": "en_US",
     "licenses": {
-        "en_GB": "License.txt"
+        "en_GB": read_textfile("LICENSE")
     },
     "buttons": {
         # For each language, text for the buttons on the licensing window.
