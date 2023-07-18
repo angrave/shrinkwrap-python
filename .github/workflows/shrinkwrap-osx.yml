@@ -1,0 +1,30 @@
+name: shrinkwrap-osx
+on:
+  workflow_dispatch:
+
+jobs:
+  package:
+    name: Package
+    runs-on: "macOS-latest"
+    steps:
+    - uses: actions/checkout@v3.1.0
+    - name: Set up Python
+      uses: actions/setup-python@v4.3.0
+      with:
+        python-version: "3.10"
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade setuptools
+        pip install -r package/requirements.txt
+    - name: Install app dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+    - name: Create osx installer
+      run: |
+         ./package/osx.sh
+    - name: Publish
+      run: |
+         echo Published
