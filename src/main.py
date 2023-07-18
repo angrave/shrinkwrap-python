@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-import sys, os
+import os
 
 # Code based on example code from 
 # https://www.pysimplegui.org/en/latest/
