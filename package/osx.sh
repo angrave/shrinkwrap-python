@@ -6,8 +6,8 @@ pyinstaller \
    --noconfirm \
    --argv-emulation \
    --paths ./venv/lib/python3.11/site-packages \
-   --icon ./Koko.png \
-   --name Koko
+   --icon ./StHelens.png \
+   --name StHelens
    src/main.py
 
-dmgbuild -s package/osxdmgbuild.py "Koko" Koko.dmg
+dmgbuild -s package/osxdmgbuild.py "StHelens" StHelens.dmg
