@@ -1,0 +1,61 @@
+name: shrinkwrap-osx
+on:
+  workflow_dispatch:
+
+jobs:
+  packageosx:
+    runs-on: "macOS-latest"
+    steps:
+    - uses: actions/checkout@v3.1.0
+    - name: Set up Python
+      uses: actions/setup-python@v4.3.0
+      with:
+        python-version: "3.10"
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade setuptools
+        pip install -r package/requirements.txt
+    - name: Install app dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+    - name: Create osx installer
+      run: |
+         ./package/osx.sh
+         find .
+    - name: Upload archive
+      uses: actions/upload-artifact@v2
+      with:
+        name: Koko.dmg
+        path: .
+          
+  publish:
+    needs: packageosx
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v2
+ 
+      - name: List artifacts
+        run: ls -R
+      
+      - name: Set version
+        run: |
+          echo "VERSION=0.0.1" >> $GITHUB_ENV
+          echo "Release Text" > ./release.body.txt
+          echo ${{ env.VERSION }}
+        
+      - name: Create github release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
+          body_path: ./release.body.txt
+          files: |
+            Koko.dmg
