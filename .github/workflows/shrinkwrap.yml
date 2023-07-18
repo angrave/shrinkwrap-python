@@ -23,7 +23,7 @@ jobs:
         pip install -r requirements.txt
     - name: Create osx installer
       run: |
-         ./package/osx.sh
+         bash ./package/osx.sh
          find .
     - name: Upload archive
       uses: actions/upload-artifact@v2
