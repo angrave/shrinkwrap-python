@@ -10,4 +10,4 @@ pyinstaller \
    --name Koko
    src/main.py
 
-dmgbuild -s package/osxdmg.py "Koko" koko.dmg
+dmgbuild -s package/osxdmgbuild.py "Koko" Koko.dmg
