@@ -21,13 +21,13 @@ jobs:
     - name: Install app dependencies
       run: |
         python -m venv venv
-        source venv/bin/activate
+        ./venv/Scripts/Activate.ps1
         pip install -r requirements.txt
 
     - name: Create Windows installer
       run: |
          bash ./package/win.sh
-         ls ./dist/
+         dir ./dist/
          
     - name: Upload installer
       uses: actions/upload-artifact@v3
