@@ -49,6 +49,15 @@ jobs:
         run: |
           ls -R ./artifacts
       
+      - name: Sparse Checkout
+        uses: actions/checkout@v3.1.0
+        with:
+          path: 'repo'
+          sparse-checkout: |
+            README.md
+            LICENSE
+          sparse-checkout-cone-mode: false
+      
       - name: Set version
         run: |
           echo "VERSION=0.0.2" >> $GITHUB_ENV
@@ -64,4 +73,5 @@ jobs:
           body_path: ./release.body.txt
           files: |
             ./artifacts/Saint_Helens.dmg/Saint_Helens.dmg
-            LICENSE
+            ./repo/LICENSE
+            ./repo/README.md
