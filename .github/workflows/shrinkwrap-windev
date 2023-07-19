@@ -1,0 +1,31 @@
+name: shrinkwrap
+on:
+  workflow_dispatch:
+
+jobs:
+  packagewin:
+    runs-on: "windows-latest"
+    steps:
+    - uses: actions/checkout@v3.1.0
+    - name: Set up Python
+      uses: actions/setup-python@v4.3.0
+      with:
+        python-version: "3.11"
+        
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade setuptools
+        pip install -r package/requirements.txt
+
+    - name: Create Windows installer
+      run: |
+         bash ./package/win.sh
+         ls ./dist/
+         
+    - name: Upload installer
+      uses: actions/upload-artifact@v3
+      with:
+        name: Saint_Helens_install.exe
+        path: Saint_Helens_install.exe
+        if-no-files-found: error
