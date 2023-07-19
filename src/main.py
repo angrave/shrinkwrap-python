@@ -9,8 +9,11 @@ basedir = os.path.dirname(__file__)
 os.chdir(basedir)
 # or os.path.join(basedir, "icons", "one.png")
 
-with open('some_text.txt','r') as fh:
-    data = fh.readlines()[0]
+try:
+    with open('some_text.txt','r') as fh:
+       data = fh.readlines()[0]
+except:
+    data = "No data file"
 
 sg.theme('DarkAmber')   # Add a touch of color
 # All the stuff inside your window.
