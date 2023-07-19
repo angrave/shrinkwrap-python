@@ -44,7 +44,10 @@ jobs:
         uses: actions/download-artifact@v2
  
       - name: List artifacts
-        run: ls -R
+        run: |
+          unzip Saint_Helens.dmg.zip
+          rm Saint_Helens.dmg.zip
+          ls -R
       
       - name: Set version
         run: |
@@ -55,8 +58,10 @@ jobs:
       - name: Create github release
         uses: softprops/action-gh-release@v1
         with:
+          fail_on_unmatched_files: True
           tag_name: ${{ env.VERSION }}
           name: ${{ env.VERSION }}
           body_path: ./release.body.txt
           files: |
             Saint_Helens.dmg
+            LICENSE
