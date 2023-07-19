@@ -33,5 +33,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Saint_Helens_install.exe
-        path: Saint_Helens_install.exe
+        path: dist
         if-no-files-found: error
