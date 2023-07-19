@@ -11,13 +11,24 @@ jobs:
       uses: actions/setup-python@v4.3.0
       with:
         python-version: "3.11"
+
+    - name: Install NSIS
+      run: |
+        iwr -useb get.scoop.sh -outfile 'install.ps1'
+        .\install.ps1 -RunAsAdmin
+        scoop update
+        scoop bucket add extras
+        scoop install nsis
         
+    - name: Print NSIS version
+      run: makensis -VERSION
+
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools
-        pip install -r package/requirements.txt
-        
+        pip install -r package/requirements-win.txt      
+    
     - name: Install app dependencies
       run: |
         python -m venv venv
@@ -28,6 +39,9 @@ jobs:
       run: |
          bash ./package/win.sh
          dir ./dist/
+         makensis.exe ./package/wininstall.nsi
+
+         
          
     - name: Upload installer
       uses: actions/upload-artifact@v3
