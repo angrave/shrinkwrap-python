@@ -1,4 +1,4 @@
-name: shrinkwrap-osx
+name: shrinkwrap
 on:
   workflow_dispatch:
 
