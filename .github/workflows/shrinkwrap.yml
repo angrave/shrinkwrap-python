@@ -26,7 +26,7 @@ jobs:
          bash ./package/osx.sh
          ls ./dist/
     - name: Upload disk image
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Saint_Helens.dmg
         path: Saint_Helens.dmg
@@ -41,13 +41,13 @@ jobs:
       
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
+        with:
+          path: ./artifacts
  
       - name: List artifacts
         run: |
-          unzip Saint_Helens.dmg.zip
-          rm Saint_Helens.dmg.zip
-          ls -R
+          ls -R ./artifacts
       
       - name: Set version
         run: |
@@ -63,5 +63,5 @@ jobs:
           name: ${{ env.VERSION }}
           body_path: ./release.body.txt
           files: |
-            Saint_Helens.dmg
+            ./artifacts/Saint_Helens.dmg/Saint_Helens.dmg
             LICENSE
