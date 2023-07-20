@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-packagewin:
+  packagewin:
     runs-on: "windows-latest"
     steps:
     - uses: actions/checkout@v3.1.0
@@ -36,7 +36,6 @@ packagewin:
     - name: Create Windows app
       run: |
          python package/runpyinstaller.py
-         dir ./dist/
          
     - name: Create Windows installer
       run: |
