@@ -138,8 +138,13 @@ Section $(LangStringSecMainComponentName) SecMainComponent
   ;Now you can list files that should be extracted to this output path or create
   ;directories:
 
+  !define SRCPATH "..\dist\Saint_Helens"
+  
   ;Copy a file to the current SetOutPath directory
-  File "..\LICENSE" "License.txt"
+
+  File \r "*"
+  ;https://nsis.sourceforge.io/Docs/Chapter4.html#file
+
 
   ;Copy a file to the current SetOutPath directory with a custom name
   ;File "/oname=custom_name.txt" "..\example_files\example.txt"
