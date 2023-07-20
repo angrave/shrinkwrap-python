@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
+import glob 
 from pathlib import Path
 
 import PyInstaller.__main__
@@ -41,7 +42,10 @@ def main():
 
     PyInstaller.__main__.run(options)
 
+    print()
     print('Contents of dist:',  ','.join(os.listdir('dist')) )
+    for f in glob.glob('dist/**/*.txt', recursive=True):
+        print(f)
 
 if __name__ == "__main__": 
     main()
