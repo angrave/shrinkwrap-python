@@ -11,17 +11,8 @@ jobs:
       uses: actions/setup-python@v4.3.0
       with:
         python-version: "3.11"
-
-    - name: Install NSIS
-      run: |
-        iwr -useb get.scoop.sh -outfile 'install.ps1'
-        .\install.ps1 -RunAsAdmin
-        scoop update
-        scoop bucket add extras
-        scoop install nsis
-        makensis -VERSION
         
-    - name: Install build dependencies
+    - name: Install python build dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools
@@ -31,14 +22,23 @@ jobs:
       run: |
         python -m venv venv
         ./venv/Scripts/Activate.ps1
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Create Windows app
+    - name: Create Windows python app
       run: |
          python package/runpyinstaller.py
-         dir ./dist/
          
-    - name: Create Windows installer
+    - name: Install NSIS
+      run: |
+        iwr -useb get.scoop.sh -outfile 'install.ps1'
+        .\install.ps1 -RunAsAdmin
+        scoop update
+        scoop bucket add extras
+        scoop install nsis
+        makensis -VERSION
+
+    - name: Create Windows Installer
       run: |
          makensis.exe ./package/wininstall.nsi         
          
@@ -46,9 +46,8 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Saint_Helens_install.exe
-        path: dist
-        if-no-files-found: error
-        
+        path: dist/Saint_Helens_install.exe
+        if-no-files-found: error        
          
   packageosx:
     runs-on: "macOS-latest"
@@ -69,6 +68,7 @@ jobs:
       run: |
         python -m venv venv
         source venv/bin/activate
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
         
     - name: Create osx app
@@ -129,5 +129,6 @@ jobs:
           body_path: ./release.body.txt
           files: |
             ./artifacts/Saint_Helens.dmg/Saint_Helens.dmg
+            ./artifacts/Saint_Helens_install.exe/Saint_Helens_install.exe
             ./repo/LICENSE
             ./repo/README.md
