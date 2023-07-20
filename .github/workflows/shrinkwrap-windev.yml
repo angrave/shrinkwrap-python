@@ -11,17 +11,8 @@ jobs:
       uses: actions/setup-python@v4.3.0
       with:
         python-version: "3.11"
-
-    - name: Install NSIS
-      run: |
-        iwr -useb get.scoop.sh -outfile 'install.ps1'
-        .\install.ps1 -RunAsAdmin
-        scoop update
-        scoop bucket add extras
-        scoop install nsis
-        makensis -VERSION
         
-    - name: Install build dependencies
+    - name: Install python build dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools
@@ -30,15 +21,24 @@ jobs:
     - name: Install app dependencies
       run: |
         python -m venv venv
-        python -m pip install --upgrade pip
         ./venv/Scripts/Activate.ps1
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Create Windows app
+    - name: Create Windows python app
       run: |
          python package/runpyinstaller.py
          
-    - name: Create Windows installer
+   - name: Install NSIS
+      run: |
+        iwr -useb get.scoop.sh -outfile 'install.ps1'
+        .\install.ps1 -RunAsAdmin
+        scoop update
+        scoop bucket add extras
+        scoop install nsis
+        makensis -VERSION
+
+    - name: Create Windows Installer
       run: |
          makensis.exe ./package/wininstall.nsi         
          
