@@ -29,7 +29,7 @@ jobs:
       run: |
          python package/runpyinstaller.py
          
-   - name: Install NSIS
+    - name: Install NSIS
       run: |
         iwr -useb get.scoop.sh -outfile 'install.ps1'
         .\install.ps1 -RunAsAdmin
