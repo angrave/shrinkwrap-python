@@ -143,7 +143,7 @@ Section $(LangStringSecMainComponentName) SecMainComponent
 
   ;Copy a file to the current SetOutPath directory
 
-  File \r "${SRCPATH}\*.*"
+  File /r "${SRCPATH}\*"
   
   ;https://nsis.sourceforge.io/Docs/Chapter4.html#file
 
