@@ -51,10 +51,15 @@ jobs:
         source venv/bin/activate
         pip install -r requirements.txt
         
-    - name: Create osx installer
+    - name: Create osx app
       run: |
-         bash ./package/osx.sh
+         python package/runpyinstaller.py
          ls ./dist/
+
+    - name: Create osx disk image
+      run: |
+         python -m dmgbuild -s package/osxdmgbuild.py "Saint_Helens" Saint_Helens.dmg
+         ls -l  Saint_Helens.dmg
          
     - name: Upload disk image
       uses: actions/upload-artifact@v3
