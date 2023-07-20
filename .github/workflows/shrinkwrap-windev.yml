@@ -19,10 +19,8 @@ jobs:
         scoop update
         scoop bucket add extras
         scoop install nsis
+        makensis -VERSION
         
-    - name: Print NSIS version
-      run: makensis -VERSION
-
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
@@ -38,12 +36,9 @@ jobs:
     - name: Create Windows installer
       run: |
          bash ./package/win.sh
-         dir ./dist/
-         makensis.exe ./package/wininstall.nsi
-
+         makensis.exe ./package/wininstall.nsi         
          
-         
-    - name: Upload installer
+    - name: Upload Windows installer
       uses: actions/upload-artifact@v3
       with:
         name: Saint_Helens_install.exe
