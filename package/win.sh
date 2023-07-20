@@ -12,7 +12,7 @@ mkdir dist
 pyinstaller \
    --clean \
    --windowed  \
-   --noconfirm \ 
+   --noconfirm \
    --paths ./venv/lib/python3.11/site-packages \
    --icon ./Saint_Helens.png \
    --name Saint_Helens \
