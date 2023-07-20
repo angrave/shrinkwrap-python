@@ -15,7 +15,7 @@
 ;Define website of the product
 !define PRODUCT_URL "https://en.wikipedia.org/wiki/Mount_St._Helens"
 
-
+!define SRCPATH "..\dist\Saint_Helens"
 ;--------------------------------
 ;General information
 
@@ -67,7 +67,7 @@ ShowUninstDetails "show"
 ;Installer pages
 
 ;Show a page where the user needs to accept a license
-!insertmacro MUI_PAGE_LICENSE "../LICENSE"
+!insertmacro MUI_PAGE_LICENSE "License.txt"
 ;Show a page where the user can customize the components to be installed
 ;!insertmacro MUI_PAGE_COMPONENTS
 ;Show a page where the user can customize the install directory
@@ -138,8 +138,6 @@ Section $(LangStringSecMainComponentName) SecMainComponent
   ;Now you can list files that should be extracted to this output path or create
   ;directories:
 
-  !define SRCPATH "..\dist\Saint_Helens"
-  
   ;Copy a file to the current SetOutPath directory
 
   File \r "*"
