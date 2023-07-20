@@ -11,7 +11,9 @@ elif sys.platform == 'darwin':
     platform = 'osx'
 elif os.name == 'nt':
     platform = 'win'
-    
+
+pathsep = os.pathsep
+
 def main():
     assert Path("src").is_dir(),'Run this from the repo root'
     
@@ -30,7 +32,7 @@ def main():
         '--windowed',
         '--noconfirm',
         '--paths',sitepackages,
-        '--add-data=./media/:media',
+        f'--add-data=./media/{pathsep}media',
         '--icon','./media/Saint_Helens.png',
         '--name','Saint_Helens'] 
 
