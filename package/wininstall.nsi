@@ -26,7 +26,7 @@ Unicode true
 Name "${PRODUCT}"
 
 ;The output file path of the installer to be created
-OutFile "Saint_Helens_installer.exe"
+OutFile "..\dist\Saint_Helens_installer.exe"
 
 ;The default installation directory
 InstallDir "$PROGRAMFILES64\${PRODUCT}"
