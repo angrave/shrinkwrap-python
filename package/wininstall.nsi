@@ -1,4 +1,4 @@
-a; based on https://github.com/AnonymerNiklasistanonym/NsiWindowsInstallerExamples/blob/main/example_03_modern_ui_and_multi_language/windows_installer.nsi
+; based on https://github.com/AnonymerNiklasistanonym/NsiWindowsInstallerExamples/blob/main/example_03_modern_ui_and_multi_language/windows_installer.nsi
 
 ;--------------------------------
 ;Include Modern UI
