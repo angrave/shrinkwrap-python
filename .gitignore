@@ -1,0 +1,6 @@
+*dmg
+*spec
+dist
+venv
+build/
+src/__pycache__/
