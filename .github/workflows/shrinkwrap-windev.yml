@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  packagewin:
+packagewin:
     runs-on: "windows-latest"
     steps:
     - uses: actions/checkout@v3.1.0
@@ -32,10 +32,14 @@ jobs:
         python -m venv venv
         ./venv/Scripts/Activate.ps1
         pip install -r requirements.txt
-
+        
+    - name: Create Windows app
+      run: |
+         python package/runpyinstaller.py
+         dir ./dist/
+         
     - name: Create Windows installer
       run: |
-         bash ./package/win.sh
          makensis.exe ./package/wininstall.nsi         
          
     - name: Upload Windows installer
