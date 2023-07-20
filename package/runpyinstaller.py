@@ -15,7 +15,8 @@ elif os.name == 'nt':
 def main():
     assert Path("src").is_dir(),'Run this from the repo root'
     
-    sitepackages = './venv/lib/python3.11/site-packages'
+    sitepackages =  './venv/Lib/site-packages' if platform == 'win' else './venv/lib/python3.11/site-packages'
+
     assert Path(sitepackages).is_dir(), f'{sitepackages} does not exist'
     
     # Todo: OSX code signing, [--codesign-identity IDENTITY] [--osx-entitlements-file FILENAME]
@@ -24,7 +25,8 @@ def main():
         'win': [],
         'linux': []}
     
-    common_options = ['--clean',
+    common_options = [
+        '--clean', 
         '--windowed',
         '--noconfirm',
         '--paths',sitepackages,
@@ -36,6 +38,8 @@ def main():
     print(options)
 
     PyInstaller.__main__.run(options)
+
+    print('Contents of dist:',  ','.join(os.listdir('dist')) )
 
 if __name__ == "__main__": 
     main()

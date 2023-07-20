@@ -1,18 +1,12 @@
 import os.path
 import plistlib
 
-#
-# Example settings file for dmgbuild
-#
 
-# Use like this: dmgbuild -s settings.py "Test Volume" test.dmg
+# Usage:
 
-# You can actually use this file for your own application (not just TextEdit)
-# by doing e.g.
-#
-#   dmgbuild -s settings.py -D app=/path/to/My.app "My Application" MyApp.dmg
-
-# .. Useful stuff ..............................................................
+# dmgbuild -s package/osxdmgbuild.py "Saint_Helens" Saint_Helens.dmg
+# Or,
+# python -m dmgbuild -s package/osxdmgbuild.py "Saint_Helens" Saint_Helens.dmg
 
 
 application = defines.get("app", "./dist/Saint_Helens.app") # noqa: F821
