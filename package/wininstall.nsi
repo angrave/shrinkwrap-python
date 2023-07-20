@@ -69,7 +69,7 @@ ShowUninstDetails "show"
 ;Show a page where the user needs to accept a license
 
 ;pyinstaller creates License.txt in dist
-!insertmacro MUI_PAGE_LICENSE "media\License.txt"
+!insertmacro MUI_PAGE_LICENSE "${SRCPATH}\media\License.txt"
 
 ;Show a page where the user can customize the components to be installed
 ;!insertmacro MUI_PAGE_COMPONENTS
@@ -143,7 +143,8 @@ Section $(LangStringSecMainComponentName) SecMainComponent
 
   ;Copy a file to the current SetOutPath directory
 
-  File \r "*"
+  File \r "${SRCPATH}\*.*"
+  
   ;https://nsis.sourceforge.io/Docs/Chapter4.html#file
 
 
