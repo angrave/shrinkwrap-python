@@ -1,4 +1,4 @@
-; based on https://github.com/AnonymerNiklasistanonym/NsiWindowsInstallerExamples/blob/main/example_03_modern_ui_and_multi_language/windows_installer.nsi
+a; based on https://github.com/AnonymerNiklasistanonym/NsiWindowsInstallerExamples/blob/main/example_03_modern_ui_and_multi_language/windows_installer.nsi
 
 ;--------------------------------
 ;Include Modern UI
@@ -67,7 +67,10 @@ ShowUninstDetails "show"
 ;Installer pages
 
 ;Show a page where the user needs to accept a license
-!insertmacro MUI_PAGE_LICENSE "License.txt"
+
+;pyinstaller creates License.txt in dist
+!insertmacro MUI_PAGE_LICENSE "media\License.txt"
+
 ;Show a page where the user can customize the components to be installed
 ;!insertmacro MUI_PAGE_COMPONENTS
 ;Show a page where the user can customize the install directory
