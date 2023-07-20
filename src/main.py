@@ -1,23 +1,39 @@
 import PySimpleGUI as sg
-
+from pathlib import Path
 import os
+import another
 
 # Code based on example code from 
 # https://www.pysimplegui.org/en/latest/
 
-basedir = os.path.dirname(__file__)
-os.chdir(basedir)
+#In Mac OSX app MacOS, this python file is inside Saint_Helens.app/Contents/MacOS
+# Saint_Helens.app/Contents/MacOS/Saint_Helens
+thisfile = os.path.realpath( os.path.dirname(__file__) )
+
+if thisfile.endswith("Contents/MacOS"):
+    resources = os.path.realpath( thisfile + '/../Resources' )
+else:
+    resources = os.path.realpath( thisfile + '/..' )
+    
+mediadir =  os.path.realpath( resources + '/media' )
+print(mediadir)
+
 # or os.path.join(basedir, "icons", "one.png")
 
+result = 0
 try:
-    with open('some_text.txt','r') as fh:
+    result = another.sum(1,2)
+    with open(mediadir + '/some_text.txt','r') as fh:
        data = fh.readlines()[0]
 except:
     data = "No data file"
 
 sg.theme('DarkAmber')   # Add a touch of color
 # All the stuff inside your window.
-layout = [  [sg.Text('Some text on Row 1:' + data)],
+layout = [  [sg.Text('Result:' + str(result))],
+    [sg.Text('mediadir:' + mediadir)],
+            [sg.Text('__file__ dir:' + thisfile )],
+            [sg.Text('Some text on Row 1:' + data)],
             [sg.Text('Enter something on Row 2'), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancel')] ]
 
