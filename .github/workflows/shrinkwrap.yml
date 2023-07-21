@@ -1,6 +1,11 @@
 name: shrinkwrap
 on:
   workflow_dispatch:
+    inputs:
+      version_tag:
+        description: "Public version label e.g. 0.0.1, alphabuild-001,..."
+        required: true
+        type: string
 
 jobs:
   packagewin:
@@ -116,7 +121,7 @@ jobs:
       
       - name: Set version
         run: |
-          echo "VERSION=0.0.2" >> $GITHUB_ENV
+          echo "VERSION={{ inputs.version_tag }}" >> $GITHUB_ENV
           echo "Release Text" > ./release.body.txt
           echo ${{ env.VERSION }}
         
