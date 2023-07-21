@@ -121,9 +121,9 @@ jobs:
       
       - name: Set version
         run: |
-          echo "VERSION={{ inputs.version_tag }}" >> $GITHUB_ENV
+          echo "VERSION={{  github.event.inputs.version_tag }}" >> $GITHUB_ENV
           echo "Release Text" > ./release.body.txt
-          echo ${{ env.VERSION }}
+          echo Version tag in env: ${{ env.VERSION }}
         
       - name: Create github release
         uses: softprops/action-gh-release@v1
