@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       version_tag:
-        description: "Public version label e.g. 0.0.1, alphabuild-001,..."
+        description: "Public version label in the form 0.0.1"
         required: true
         type: string
 
