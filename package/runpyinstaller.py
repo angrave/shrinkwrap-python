@@ -14,17 +14,25 @@ elif os.name == 'nt':
     platform = 'win'
 
 pathsep = os.pathsep
+    
+def osx_site_package():
+    packages = list( glob.glob('./venv/lib/python3.*/site-packages') )
+    assert len(packages) == 1, "Expected one site-package in venv. Found {len(packages)}.\n{packages}"
+    return packages[0]
 
 def main():
     assert Path("src").is_dir(),'Run this from the repo root'
     
-    sitepackages =  './venv/Lib/site-packages' if platform == 'win' else './venv/lib/python3.11/site-packages'
+    sitepackages =  './venv/Lib/site-packages' if platform == 'win' else osx_site_package()
 
     assert Path(sitepackages).is_dir(), f'{sitepackages} does not exist'
     
     # Todo: OSX code signing, [--codesign-identity IDENTITY] [--osx-entitlements-file FILENAME]
+    
     # OSX: Don't use '--argv-emulation' with (Tk) UI
     # See Tk Warning here https://pyinstaller.org/en/stable/feature-notes.html#macos-event-forwarding-and-argv-emulation
+    # In practice, an app installed into Applications will crash or freeze when first run due to a race condition.
+    # It is more likely to crash  when the app was created non-locally
     
     platform_options = {
         'osx': [],
@@ -37,7 +45,7 @@ def main():
         '--noconfirm',
         '--paths',sitepackages,
         f'--add-data=./media/{pathsep}media',
-        '--icon','./media/Saint_Helens.png',
+        '--icon','./media/Saint_Helens.icns',
         '--name','Saint_Helens'] 
 
     options = ['src/main.py'] + common_options + platform_options[platform] 
