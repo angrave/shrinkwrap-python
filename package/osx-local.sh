@@ -10,20 +10,16 @@ quit() {
   exit 1
 }
 
-alias python=python3
-
 python() { 
   python3 $* 
 }
 
 assertpython() {
-   python --version 
   python --version | grep $1 || quit "Expected python 3.11"
 }
 assertreporoot() {
   [ -d '.git' ] || quit "Current directory shoule be root of the repo"
 }
-
 
 assertreporoot
 
@@ -51,5 +47,10 @@ fi
 
 source package/venv/bin/activate
 python package/runpyinstaller.py
+# You could test the application
+# open package/Saint_Helens.app
+
+# A full test - create a the final installer, and copy it into the Applications-
 
 python -m dmgbuild -s package/osxdmgbuild.py "Saint_Helens" Saint_Helens.dmg
+open Saint_Helens.dmg
