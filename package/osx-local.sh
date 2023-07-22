@@ -15,42 +15,51 @@ python() {
 }
 
 assertpython() {
-  python --version | grep $1 || quit "Expected python 3.11"
+  python --version | grep $1 || quit "Expected python $1"
 }
 assertreporoot() {
   [ -d '.git' ] || quit "Current directory shoule be root of the repo"
+}
+
+installrequirements() {
+  reqfile="$1"
+  subdir="$2"
+  extras="$3"
+  if [[ ! -d "$subdir" || "$reqfile" -nt "${subdir}/.uptodate" ]] ; then
+    echo Adding requirements $reqfile to $subdir
+    rm -rf "$subdir"
+    python -m venv "${subdir}"
+    source "${subdir}/bin/activate"
+    for pkg in $extras ; do
+      echo Upgrading $pkg
+      python -m pip install --upgrade $pkg
+    done
+    pip install -r "$reqfile"
+    touch "${subdir}/.uptodate"
+  fi
 }
 
 assertreporoot
 
 assertpython 3.11
 
-if [[ FILE1 -nt FILE2 ]]; then
-  echo FILE1 is newer than FILE2
-fi
+# Fresh install of all packages needed to build the installer
+# This is a no-op if package/requirements.txt has not been changed
+installrequirements "package/requirements.txt" "package/venv" "pip setuptools"
 
-if [[ ! -d 'package/venv' ]]; then
-  python -m venv package/venv
-  source package/venv/bin/activate
-  python -m pip install --upgrade pip
+# Fresh install of all packages needed to build the application
+# This is a no-op if package/requirements.txt has not been changed
+installrequirements "./requirements.txt" "./venv" "pip"
 
-  python -m pip install --upgrade setuptools
-  pip install -r package/requirements.txt
-fi
-
-if [[ ! -d 'venv' ]]; then
-  python -m venv venv
-  source venv/bin/activate
-  python -m pip install --upgrade pip
-  pip install -r requirements.txt
-fi
-
+# Build the application (dist/Saint_Helens.app)
 source package/venv/bin/activate
 python package/runpyinstaller.py
-# You could test the application
+
+
+# You could test the application-
 # open package/Saint_Helens.app
 
-# A full test - create a the final installer, and copy it into the Applications-
 
+# Build the disk image and open it.
 python -m dmgbuild -s package/osxdmgbuild.py "Saint_Helens" Saint_Helens.dmg
 open Saint_Helens.dmg
