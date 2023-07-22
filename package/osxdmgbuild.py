@@ -1,6 +1,11 @@
+#!/usr/bin/env python3
 import os.path
 import plistlib
 
+
+if __name__ == '__main__':
+    print('python -m dmgbuild -s package/osxdmgbuild.py "Saint_Helens" Saint_Helens.dmg')
+    exit()
 
 # Usage:
 
