@@ -208,7 +208,7 @@ list_column_sort_directions = {
 license = {
     "default-language": "en_US",
     "licenses": {
-        "en_GB": read_textfile("LICENSE")
+        "en_GB": read_textfile("media/License.txt")
     },
     "buttons": {
         # For each language, text for the buttons on the licensing window.
