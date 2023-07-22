@@ -23,8 +23,11 @@ def main():
     assert Path(sitepackages).is_dir(), f'{sitepackages} does not exist'
     
     # Todo: OSX code signing, [--codesign-identity IDENTITY] [--osx-entitlements-file FILENAME]
+    # OSX: Don't use '--argv-emulation' with (Tk) UI
+    # See Tk Warning here https://pyinstaller.org/en/stable/feature-notes.html#macos-event-forwarding-and-argv-emulation
+    
     platform_options = {
-        'osx': ['--argv-emulation'],
+        'osx': [],
         'win': [],
         'linux': []}
     
