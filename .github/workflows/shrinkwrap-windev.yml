@@ -6,7 +6,9 @@ jobs:
   packagewin:
     runs-on: "windows-latest"
     steps:
-    - uses: actions/checkout@v3.1.0
+    - name: Checkout 
+      uses: actions/checkout@v3.1.0
+    
     - name: Set up Python
       uses: actions/setup-python@v4.3.0
       with:
@@ -17,7 +19,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools
         pip install -r package/requirements.txt      
-    
+        
     - name: Install app dependencies
       run: |
         python -m venv venv
@@ -28,7 +30,17 @@ jobs:
     - name: Create Windows python app
       run: |
          python package/runpyinstaller.py
-         
+    
+    - name: Sign binary components
+      uses: dlemstra/code-sign-action@v1
+      if: ${{ secrets.CERTIFICATE  != '' }}
+      with:
+          certificate: '${{ secrets.CERTIFICATE }}'
+          password: '${{ secrets.CERTIFICATE_PASSWORD }}'
+          description : "Saint Helens"
+          folder : dist/
+          recursive : true
+
     - name: Install NSIS
       run: |
         iwr -useb get.scoop.sh -outfile 'install.ps1'
@@ -42,9 +54,20 @@ jobs:
       run: |
          makensis.exe ./package/wininstall.nsi         
          
+    - name: Sign installer.exe
+      uses: dlemstra/code-sign-action@v1
+      if: ${{ secrets.CERTIFICATE  != '' }}
+      with:
+          certificate: '${{ secrets.CERTIFICATE }}'
+          password: '${{ secrets.CERTIFICATE_PASSWORD }}'
+          description : "Saint Helens"
+          files : |
+            dist/Saint_Helens_install.exe
+          recursive : false
+    
     - name: Upload Windows installer
       uses: actions/upload-artifact@v3
       with:
         name: Saint_Helens_install.exe
-        path: dist
+        path: dist/Saint_Helens_install.exe
         if-no-files-found: error

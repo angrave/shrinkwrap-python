@@ -8,12 +8,18 @@ import another
 
 #In Mac OSX app MacOS, this python file is inside Saint_Helens.app/Contents/MacOS
 # Saint_Helens.app/Contents/MacOS/Saint_Helens
-thisfile = os.path.realpath( os.path.dirname(__file__) )
+# And PyInstaller puts manually added data directories inside the neighboring Resources/ directory
 
-if thisfile.endswith("Contents/MacOS"):
-    resources = os.path.realpath( thisfile + '/../Resources' )
+# In Windows, everything is relative to the PyInstall output directory
+
+moduledir = os.path.realpath( os.path.dirname(__file__) )
+
+if moduledir.endswith("Contents/MacOS"):
+    resources = os.path.realpath( moduledir + '/../Resources' ) # OSX app 
+elif moduledir.endswith("src"):
+    resources = os.path.realpath( moduledir + '/../' ) # Project Source
 else:
-    resources = os.path.realpath( thisfile + '/..' )
+    resources = os.path.realpath( moduledir ) # Windows
     
 mediadir =  os.path.realpath( resources + '/media' )
 print(mediadir)
@@ -32,7 +38,7 @@ sg.theme('DarkAmber')   # Add a touch of color
 # All the stuff inside your window.
 layout = [  [sg.Text('Result:' + str(result))],
     [sg.Text('mediadir:' + mediadir)],
-            [sg.Text('__file__ dir:' + thisfile )],
+            [sg.Text('__file__ dir:' + moduledir )],
             [sg.Text('Some text on Row 1:' + data)],
             [sg.Text('Enter something on Row 2'), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancel')] ]

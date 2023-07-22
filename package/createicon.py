@@ -17,6 +17,6 @@ print( f"Saving {infile} as {outfile}" )
 logo = Image.open(infile)
 
 #Save as Windows Application Icon
-logo.save(outfile, format='ICO',sizes=[(256, 256)])
+logo.save(outfile, format='ICO')
 
 print("Finished")

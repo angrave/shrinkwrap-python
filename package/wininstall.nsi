@@ -15,7 +15,14 @@
 ;Define website of the product
 !define PRODUCT_URL "https://en.wikipedia.org/wiki/Mount_St._Helens"
 
-!define SRCPATH "..\dist\Saint_Helens"
+!define SRCPATH "..\dist\${PRODUCT}"
+
+!define LangStringUninstallLink "Uninstall ${PRODUCT}"
+!define LangStringLicenseLink "License"
+!define EXECPATH "$INSTDIR\${PRODUCT}.exe"
+!define DISPLAYNAME "Saint Helens"
+!define ICONPATH "$INSTDIR\media\${PRODUCT}.ico"
+
 ;--------------------------------
 ;General information
 
@@ -26,7 +33,7 @@ Unicode true
 Name "${PRODUCT}"
 
 ;The output file path of the installer to be created
-OutFile "Saint_Helens_installer.exe"
+OutFile "..\dist\${PRODUCT}_install.exe"
 
 ;The default installation directory
 InstallDir "$PROGRAMFILES64\${PRODUCT}"
@@ -51,10 +58,11 @@ ShowUninstDetails "show"
 !define MUI_ABORTWARNING
 
 ;Disable component descriptions
-;!define MUI_COMPONENTSPAGE_NODESC
+
+!define MUI_COMPONENTSPAGE_NODESC
 
 ;Use a custom icon
-;!define MUI_ICON "icon_installer.ico"
+!define MUI_ICON "..\media\${PRODUCT}.ico"
 ;!define MUI_UNICON "icon_uninstaller.ico"
 
 ;Use a custom picture for the 'Welcome' and 'Finish' page
@@ -67,13 +75,17 @@ ShowUninstDetails "show"
 ;Installer pages
 
 ;Show a page where the user needs to accept a license
-!insertmacro MUI_PAGE_LICENSE "License.txt"
+
+; pyinstaller creates License.txt in dist
+
+!insertmacro MUI_PAGE_LICENSE "${SRCPATH}\media\License.txt"
+
 ;Show a page where the user can customize the components to be installed
 ;!insertmacro MUI_PAGE_COMPONENTS
 ;Show a page where the user can customize the install directory
 !insertmacro MUI_PAGE_DIRECTORY
 ;Show a page where the progress of the install is listed
-;!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_INSTFILES
 
 
 ;--------------------------------
@@ -111,8 +123,8 @@ Function .onInstSuccess
   ;Open a website
   ExecShell "open" "${PRODUCT_URL}"
 
-  ;Open a directory
-  ExecShell "open" "$INSTDIR"
+  ;Open the application
+  ExecShell "open" "${EXECPATH}"
 
 FunctionEnd
 
@@ -135,12 +147,15 @@ Section $(LangStringSecMainComponentName) SecMainComponent
   ;Set output path to the installation directory
   SetOutPath $INSTDIR
 
+  CreateDirectory "$INSTDIR"
+
   ;Now you can list files that should be extracted to this output path or create
   ;directories:
 
   ;Copy a file to the current SetOutPath directory
 
-  File \r "*"
+  File /r "${SRCPATH}\*"
+  
   ;https://nsis.sourceforge.io/Docs/Chapter4.html#file
 
 
@@ -163,17 +178,19 @@ Section $(LangStringSecMainComponentName) SecMainComponent
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "NoRepair"        1
   WriteUninstaller "uninstall.exe"
 
-SectionEnd
 
 
-;Optional component (can be disabled by the user)
-Section $(LangStringSecOptionalComponentName) SecOptionalComponent
+ ; CreateDirectory "$SMPROGRAMS\${PRODUCT}"
+ 
+  CreateShortcut "$SMPROGRAMS\${DISPLAYNAME}.lnk" "${EXECPATH}" "" "${ICONPATH}" 0
+  CreateShortcut "$DESKTOP\${DISPLAYNAME}.lnk" "${EXECPATH}" "" "${ICONPATH}" 0
+  CreateShortcut "$SENDTO\${DISPLAYNAME}.lnk" "${EXECPATH}" "" "${ICONPATH}" 0
 
-  CreateDirectory "$SMPROGRAMS\${PRODUCT}"
-  CreateShortcut "$SMPROGRAMS\${PRODUCT}\$(LangStringUninstallLink).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortcut "$SMPROGRAMS\${PRODUCT}\$(LangStringExampleTextFileLink).lnk" "$INSTDIR\example.txt" "" "$INSTDIR\example.txt" 0
-  CreateShortcut "$SMPROGRAMS\${PRODUCT}\$(LangStringExampleDirectoryLink).lnk" "$INSTDIR\ExampleDirectory" "" "$INSTDIR\ExampleDirectory" 0
 
+ ; CreateShortcut "$SMPROGRAMS\${PRODUCT}\${DISPLAYNAME}.lnk" "${EXECPATH}" "${EXECPATH}" 0
+ ; CreateShortcut "$SMPROGRAMS\${PRODUCT}\$(LangStringLicenseLink).lnk" "$INSTDIR\media\License.txt" "$INSTDIR\media\License.txt" 0
+ ; CreateShortcut "$SMPROGRAMS\${PRODUCT}\$(LangStringUninstallLink).lnk" "$INSTDIR\uninstall.exe" "$INSTDIR\uninstall.exe" 0
+  
 SectionEnd
 
 
@@ -187,23 +204,25 @@ Section "Uninstall"
   ;Remove files that were installed by the installer and the created uninstaller
   ;Add 'RMDir /r "$INSTDIR\folder\*.*"' for every folder that was created
   ;in the installation directory
-  RMDir /r "$INSTDIR\ExampleDirectory\*.*"
+  RMDir /r "$INSTDIR\*"
   RMDir /r "$INSTDIR\*.*"
+  ;Remove shortcuts
+  Delete "$SMPROGRAMS\${DISPLAYNAME}.lnk"
+  Delete "$DESKTOP\${DISPLAYNAME}.lnk"
+  Delete "$SENDTO\${DISPLAYNAME}.lnk"
 
-  ;Remove shortcuts if existing
-  Delete "$SMPROGRAMS\${PRODUCT}\*.*"
 
   ;Remove directories that were created by the installer
-  RMDir "$SMPROGRAMS\${PRODUCT}"
+  
   RMDir "$INSTDIR"
-
+  
 SectionEnd
 
 
 ;--------------------------------
 ;Installer Components Descriptions
 
-!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecMainComponent} $(LangStringSecMainComponentDescription)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecOptionalComponent} $(LangStringSecOptionalComponentDescription)
-!insertmacro MUI_FUNCTION_DESCRIPTION_END
+;!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+;  !insertmacro MUI_DESCRIPTION_TEXT ${SecMainComponent} $(LangStringSecMainComponentDescription)
+;  !insertmacro MUI_DESCRIPTION_TEXT ${SecOptionalComponent} $(LangStringSecOptionalComponentDescription)
+;!insertmacro MUI_FUNCTION_DESCRIPTION_END
