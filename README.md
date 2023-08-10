@@ -1,5 +1,7 @@
 # shrinkwrap-python
 
+If you find this project useful please acknowledge or cite it! e.g. "L Angrave's Shrinkwrap-python project (https://github.com/angrave/shrinkwrap-python)" 
+
 This repo creates a hello world app - Saint_Helens - as a proof of concept demonstratation of creating a cross platform installable Mac package and Windows installer using github actions. The main packagin tools used are  
 
 * Github actions
