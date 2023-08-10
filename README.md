@@ -2,7 +2,7 @@
 
 If you find this project useful please acknowledge or cite it! e.g. "L Angrave's Shrinkwrap-python project (https://github.com/angrave/shrinkwrap-python)" 
 
-This repo creates a hello world app - Saint_Helens - as a proof of concept demonstratation of creating a cross platform installable Mac package and Windows installer using github actions. The main packaging tools used are  
+This repo creates a hello world python app with a UI, "Saint_Helens" - as a proof of concept of creating a cross-platform installable Mac disk image (dmg) and Windows installer using github actions. The main packaging tools used are  
 
 * [Github actions](https://docs.github.com/en/actions)
 * [PyInstaller](https://pypi.org/project/pyinstaller/)
