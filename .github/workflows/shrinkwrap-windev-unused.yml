@@ -1,4 +1,4 @@
-name: shrinkwrap-windev
+name: shrinkwrap-windev (unused)
 on:
   workflow_dispatch:
 
