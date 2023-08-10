@@ -9,7 +9,7 @@ This repo creates a hello world app - Saint_Helens - as a proof of concept demon
 * [dmgbuild](https://github.com/dmgbuild/dmgbuild) (for OSX)
 * [NSIS](https://sourceforge.net/projects/nsis/) (to create a windows installer)
 
-Python's [Pillow](https://pypi.org/project/Pillow/) library is used to convert an app image into ico and icn image formats. Virtual environemt module `venv` is used to isolate libraries used by the applciation and libraries used by the packaging scripts.
+Python's [Pillow](https://pypi.org/project/Pillow/) library is used to convert an app image into ico and icn image formats. Virtual environemt module `venv` is used to isolate libraries used by the application and libraries used by the packaging scripts.
 
 ## Interesting stuff -
 
@@ -24,13 +24,15 @@ Python's [Pillow](https://pypi.org/project/Pillow/) library is used to convert a
 
 Neither OSX nor Windows packags are signed with a developer ID.
 
-Modern OSX platforms will refuse to run the application downloaded from GitHub after it is installed. 
+Modern OSX platforms will refuse to run the application when it is created on GitHub after it is installed. 
 Here's a workaround that worked for me on an M1 Mac (Ventura 13.4.1). After installing the app into Applications, I removed the quarantine attribute
 ```sh
 xattr -dr com.apple.quarantine /Applications/Saint_Helens.app
 ````
 
 I had also used OSX Settings to allow applications from identified developers to run, and added this app as an exception.
+
+Similarly Windows will not run unsigned external applications by default, but with some right clicking in the right places it is still possible to run the installer.
 
 ## License
 
