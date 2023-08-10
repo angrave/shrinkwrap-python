@@ -9,7 +9,7 @@ This repo creates a hello world python app with a UI, "Saint_Helens" - as a proo
 * [dmgbuild](https://github.com/dmgbuild/dmgbuild) (for OSX)
 * [NSIS](https://sourceforge.net/projects/nsis/) (to create a windows installer)
 
-Python's [Pillow](https://pypi.org/project/Pillow/) library is used to convert an app image into ico and icn image formats. Virtual environemt module `venv` is used to isolate libraries used by the application and libraries used by the packaging scripts.
+Python's [Pillow](https://pypi.org/project/Pillow/) library is used to convert an app image into ico and icn image formats. Python's virtual environemt module `venv` is used to isolate libraries used by the application and libraries used by the packaging scripts.
 
 ## Interesting stuff -
 
@@ -18,7 +18,7 @@ Python's [Pillow](https://pypi.org/project/Pillow/) library is used to convert a
 * There is also an equivalent build shell script for developer testing on OSX [osx-local.sh](https://github.com/angrave/shrinkwrap-python/blob/main/package/osx-local.sh)
 * The App source code is in `src/` directory but all of the packaging stuff is in `package/` directory.
 * To build a release, fork this project, then click on Actions menu item, select "Shrinkwrap" action and "Run workflow" Enter a n.n.n version number e.g. "0.0.1"
-* For sufficient clicking through github's interface you can watch the output of the github actions as they complete (it will take several minutes). If it completes successfully then a new "Release" are will appear in your github repo home on the right hand side.
+* With sufficient clicking through Github's action interface you can watch the output of the Github actions as they complete (it will take several minutes). If it completes successfully then a new "Release" are are will appear on the right hand side of the Github repo home page.
 
 ## Limitations
 
@@ -36,9 +36,9 @@ Similarly Windows will not run unsigned external applications by default, but wi
 
 ## License
 
-The build files are provided under the MIT open source license. However you are free to relicense these under any open-source license approved by the [OSI](https://opensource.org/licenses/).
+The build files are provided under the MIT open source license. However you are free to relicense and use these under any open-source license approved by the [OSI](https://opensource.org/licenses/).
 
-The example license displayed in the installer and bundled with the application is [media/License.txt](https://github.com/angrave/shrinkwrap-python/blob/main/media/License.txt)
+The example license file displayed by the installer and also bundled with the application is [media/License.txt](https://github.com/angrave/shrinkwrap-python/blob/main/media/License.txt). Edit this file to be license file of your project.
 
 ## Limitations
 
