@@ -13,8 +13,10 @@ This repo creates a hello world app - Saint_Helens - as a proof of concept demon
 ## Interesting stuff -
 
 * The build script is [shrinkwrap.yml](https://github.com/angrave/shrinkwrap-python/blob/main/.github/workflows/shrinkwrap.yml).
-* The application code is in [main.py](https://github.com/angrave/shrinkwrap-python/blob/main/src/main.py). The app uses python package PySimpleGUI (which uses TK) to display a simple GUI window.
+* The application code is in [main.py](https://github.com/angrave/shrinkwrap-python/blob/main/src/main.py). The app uses python package PySimpleGUI (which uses TK) to display a simple GUI window. See the source code to find out how to reference media items in a cross-platform manner.
 * There is also an equivalent build shell script for developer testing on OSX [osx-local.sh](https://github.com/angrave/shrinkwrap-python/blob/main/package/osx-local.sh)
+* The App source code is in src/ but all of the packaging stuff is in package/ directories.
+* To build a release, fork this project, then click on Actions menu item, select "Shrinkwrap" action and "Run workflow" Enter a n.n.n version number e.g. "0.0.1"
 
 ## Limitations
 
